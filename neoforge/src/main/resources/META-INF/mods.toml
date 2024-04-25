@@ -11,7 +11,7 @@ issueTrackerURL="${issues_url}" #optional:none
   version="${mod_version}" #optional:"1"
   displayName="${mod_name}" #optional:modId
   description='''${mod_description}''' #optional:'''MISSING DESCRIPTION'''
-  logoFile="${mod_icon}" #optional:none
+  logoFile="icon.png" #optional:none
   #logoBlur=false #optional:true
   #updateJSONURL="" #optional:none
   features={java_version="${java_versions_neoforge}"} #optional:none
