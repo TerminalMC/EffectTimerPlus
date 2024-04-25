@@ -32,9 +32,9 @@ public class TimerOptionsList extends OptionsList {
     protected OptionsList.Entry resetButton;
 
 
-    public TimerOptionsList(Minecraft minecraft, int width, int height, int top, int bottom,
+    public TimerOptionsList(Minecraft minecraft, int width, int height, int y,
                             int itemHeight, OptionsScreen parent) {
-        super(minecraft, width, height, top, bottom, itemHeight, parent);
+        super(minecraft, width, height, y, itemHeight, parent);
 
         int unitWidth = 200;
         int unitHeight = 18;
@@ -156,7 +156,7 @@ public class TimerOptionsList extends OptionsList {
 
     @Override
     protected int getScrollbarPosition() {
-        return this.width - 6 + x0;
+        return this.width - 6 + getX();
     }
 
     protected abstract static class Entry extends OptionsList.Entry {

@@ -23,9 +23,9 @@ public class PotencyOptionsList extends OptionsList {
     protected OptionsList.Entry resetButton;
 
 
-    public PotencyOptionsList(Minecraft minecraft, int width, int height, int top, int bottom,
+    public PotencyOptionsList(Minecraft minecraft, int width, int height, int y,
                               int itemHeight, OptionsScreen parent) {
-        super(minecraft, width, height, top, bottom, itemHeight, parent);
+        super(minecraft, width, height, y, itemHeight, parent);
 
         int unitWidth = 200;
         int unitHeight = 18;
@@ -108,6 +108,6 @@ public class PotencyOptionsList extends OptionsList {
 
     @Override
     protected int getScrollbarPosition() {
-        return this.width - 6;
+        return this.width - 6 + getX();
     }
 }

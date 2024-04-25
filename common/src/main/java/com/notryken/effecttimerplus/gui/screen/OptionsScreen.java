@@ -70,13 +70,11 @@ public class OptionsScreen extends OptionsSubScreen {
         int paneWidth = width / 2 - 8;
         int rightPaneX = width - paneWidth;
 
-        potencyOptionsList = new PotencyOptionsList(minecraft, paneWidth, paneHeight,
-                paneTopY, height-36, ITEM_HEIGHT, this);
-        potencyOptionsList.setLeftPos(0);
+        potencyOptionsList = new PotencyOptionsList(minecraft, paneWidth, paneHeight, paneTopY, ITEM_HEIGHT, this);
+        potencyOptionsList.setX(0);
 
-        timerOptionsList = new TimerOptionsList(minecraft, paneWidth, paneHeight,
-                paneTopY, height-36, ITEM_HEIGHT, this);
-        timerOptionsList.setLeftPos(rightPaneX);
+        timerOptionsList = new TimerOptionsList(minecraft, paneWidth, paneHeight, paneTopY, ITEM_HEIGHT, this);
+        timerOptionsList.setX(rightPaneX);
 
         resetButton = Button.builder(Component.literal("Reset All"), (button) -> {
             Config.resetAndSave();
