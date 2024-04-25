@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.spongepowered.asm.mixin.Final;
@@ -31,14 +32,11 @@ public class MixinGui {
     @Shadow
     private Minecraft minecraft;
 
-    @Shadow
-    private int screenWidth;
-
     @Unique
     private boolean effectTimerPlus$operate;
 
     @Inject(method = "renderEffects", at = @At("HEAD"))
-    private void scaleGraphics(GuiGraphics graphics, CallbackInfo ci) {
+    private void scaleGraphics(GuiGraphics graphics, float $$1, CallbackInfo ci) {
         effectTimerPlus$operate = false;
         Collection effects;
         label40:
@@ -57,15 +55,15 @@ public class MixinGui {
             }
             return;
         }
-        float scale = (float) Config.get().scale;
+//        float scale = (float) Config.get().scale;
         effectTimerPlus$operate = true;
-        graphics.pose().pushPose();
-        graphics.pose().scale(scale, scale, 0.0F);
-        this.screenWidth = (int) (graphics.guiWidth() / scale);
+//        graphics.pose().pushPose();
+//        graphics.pose().scale(scale, scale, 0.0F);
+//        this.screenWidth = (int) (graphics.guiWidth() / scale);
     }
 
     @Inject(method = "renderEffects", at = @At("RETURN"))
-    private void descaleGraphicsAndOverlay(GuiGraphics graphics, CallbackInfo ci) {
+    private void descaleGraphicsAndOverlay(GuiGraphics graphics, float $$1, CallbackInfo ci) {
         if (effectTimerPlus$operate) {
             // Replicate vanilla placement algorithm to place labels correctly
             Collection<MobEffectInstance> effects = this.minecraft.player.getActiveEffects();
@@ -75,15 +73,15 @@ public class MixinGui {
                 int nonBeneficialCount = 0;
 
                 for (MobEffectInstance effectInstance : Ordering.natural().reverse().sortedCopy(effects)) {
-                    MobEffect effect = effectInstance.getEffect();
+                    Holder<MobEffect> effect = effectInstance.getEffect();
                     if (effectInstance.showIcon()) {
-                        int x = this.screenWidth;
+                        int x = graphics.guiWidth(); // this.screenWidth
                         int y = 1;
                         if (this.minecraft.isDemo()) {
                             y += 15;
                         }
 
-                        if (effect.isBeneficial()) {
+                        if (effect.value().isBeneficial()) {
                             ++beneficialCount;
                             x -= 25 * beneficialCount;
                         } else {
@@ -115,8 +113,8 @@ public class MixinGui {
                         }
                     }
                 }
-                graphics.pose().popPose();
-                this.screenWidth = graphics.guiWidth();
+//                graphics.pose().popPose();
+//                this.screenWidth = graphics.guiWidth();
             }
         }
     }

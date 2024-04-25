@@ -1,2 +1,1 @@
-- Fixed something
-- Added `something else`
+- Disabled scaling option due to Minecraft code changes, possibly only temporarily

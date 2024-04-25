@@ -11,4 +11,6 @@ public interface GuiAccessor {
     public static ResourceLocation getEffectBackgroundSprite() {
         throw new AssertionError();
     }
+
+
 }

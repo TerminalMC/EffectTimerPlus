@@ -3,7 +3,6 @@ package com.notryken.effecttimerplus.gui.screen;
 import com.notryken.effecttimerplus.config.Config;
 import com.notryken.effecttimerplus.gui.widget.list.PotencyOptionsList;
 import com.notryken.effecttimerplus.gui.widget.list.TimerOptionsList;
-import com.notryken.effecttimerplus.gui.widget.slider.DoubleSlider;
 import com.notryken.effecttimerplus.mixin.accessor.GuiAccessor;
 import com.notryken.effecttimerplus.util.MiscUtil;
 import net.minecraft.client.Minecraft;
@@ -40,7 +39,7 @@ public class OptionsScreen extends OptionsSubScreen {
     };
 
     // GUI elements
-    private DoubleSlider scaleSlider;
+//    private DoubleSlider scaleSlider;
     private PotencyOptionsList potencyOptionsList;
     private TimerOptionsList timerOptionsList;
     private Button resetButton;
@@ -57,13 +56,19 @@ public class OptionsScreen extends OptionsSubScreen {
     }
 
     @Override
-    protected void init() {
+    public void resize(@NotNull Minecraft mc, int width, int height) {
+        super.resize(mc, width, height);
+        clearWidgets();
+        init();
+    }
 
+    @Override
+    protected void init() {
         int optionsTopY = MIN_Y + 65;
 
-        scaleSlider = new DoubleSlider(this.width / 2 - 80, optionsTopY + 5, 160, 20, 0,
-                2, 1, "Icon Scale: ", null, null, null,
-                () -> Config.get().scale, (value) -> Config.get().scale = value);
+//        scaleSlider = new DoubleSlider(this.width / 2 - 80, optionsTopY + 5, 160, 20, 0,
+//                2, 1, "Icon Scale: ", null, null, null,
+//                () -> Config.get().scale, (value) -> Config.get().scale = value);
 
         int paneTopY = optionsTopY + 30;
         int paneHeight = height - paneTopY - 36;
@@ -89,7 +94,7 @@ public class OptionsScreen extends OptionsSubScreen {
                 .size(150, 20)
                 .build();
 
-        addRenderableWidget(scaleSlider);
+//        addRenderableWidget(scaleSlider);
         addRenderableWidget(potencyOptionsList);
         addRenderableWidget(timerOptionsList);
         addRenderableWidget(resetButton);
@@ -100,7 +105,7 @@ public class OptionsScreen extends OptionsSubScreen {
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float delta) {
         super.render(graphics, mouseX, mouseY, delta);
         graphics.drawCenteredString(font, title, width / 2, 15, 16777215);
-        scaleSlider.render(graphics, mouseX, mouseY, delta);
+//        scaleSlider.render(graphics, mouseX, mouseY, delta);
 
         // Render demo status effect icons
         int xSpace = 27; // Icon spacing
@@ -133,11 +138,6 @@ public class OptionsScreen extends OptionsSubScreen {
             }
             x += xSpace;
         }
-    }
-
-    @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-        this.renderDirtBackground(graphics);
     }
 
     @Override
