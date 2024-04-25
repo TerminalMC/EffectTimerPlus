@@ -1,4 +1,4 @@
-<div align="center">
+<div align="center"><center>
 
 ## NotRyken MultiLoader Template
 
@@ -16,7 +16,7 @@ Adds a potency indicator and countdown overlay to status effect icons.
 EffectTimerPlus is a functional expansion of [Status Effect Timer](https://modrinth.com/mod/T9FDHbY5/), with a
 focus on customization.
 
-</div>
+</center></div>
 
 ### Features
 
