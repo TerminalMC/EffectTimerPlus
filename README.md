@@ -1,6 +1,6 @@
 <div align="center"><center>
 
-## NotRyken MultiLoader Template
+## Effect Timer Plus
 
 [![Environment](https://img.shields.io/badge/Environment-Client-purple)]()
 [![Latest Minecraft](https://img.shields.io/modrinth/game-versions/JIUF2Wb5?label=Latest%20Minecraft&color=%2300AF5C)](https://modrinth.com/mod/JIUF2Wb5/versions)
