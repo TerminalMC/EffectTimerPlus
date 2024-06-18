@@ -79,8 +79,12 @@ public class MiscUtil {
         else if (seconds >= 3600) {
             return seconds / 3600 + "h";
         }
-        else if (seconds >= 60) {
+        else if (seconds >= 600) {
             return seconds / 60 + "m";
+        }
+        else if (seconds >= 60) {
+            int sec = seconds % 60;
+            return seconds / 60 + ":" + (sec > 9 ? sec : "0" + sec);
         }
         else {
             return String.valueOf(seconds);
