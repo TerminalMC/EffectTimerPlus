@@ -28,9 +28,9 @@ public abstract class OptionsList extends ContainerObjectSelectionList<OptionsLi
 
     protected final OptionsScreen parent;
 
-    public OptionsList(Minecraft minecraft, int width, int height, int y,
+    public OptionsList(Minecraft minecraft, int width, int height, int x, int y,
                        int itemHeight, OptionsScreen parent) {
-        super(minecraft, width, height, y, itemHeight);
+        super(minecraft, width, height, x, y, itemHeight);
         this.parent = parent;
     }
 

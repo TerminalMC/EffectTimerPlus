@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="${neoforge_loader_versions}"
+license="${mod_license}"
+issueTrackerURL="${issues_url}"
+
+[[mods]]
+  modId="${mod_id}"
+  version="${mod_version}"
+  displayName="${mod_name}"
+  description='''${mod_description}'''
+  logoFile="icon.png"
+  features={java_version="${java_versions_neoforge}"}
+  credits="${mod_contributors_string}"
+  authors="${mod_authors_string}"
+  displayURL="${homepage_url}"
+
+[[mixins]]
+  config="${mod_id}.mixins.json"
+[[mixins]]
+  config="${mod_id}.neoforge.mixins.json"
+
+[[dependencies."${mod_id}"]]
+  modId="minecraft"
+  mandatory=true
+  versionRange="${minecraft_versions_neoforge}"
+
+[[dependencies."${mod_id}"]]
+  modId="neoforge"
+  mandatory=true
+  versionRange="${neoforge_versions}"
+  side="CLIENT"
+
+# https://docs.neoforged.net/docs/gettingstarted/modfiles/#modstoml
+# https://docs.neoforged.net/docs/misc/updatechecker/

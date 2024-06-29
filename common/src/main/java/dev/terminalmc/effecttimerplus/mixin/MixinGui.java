@@ -3,11 +3,9 @@ package dev.terminalmc.effecttimerplus.mixin;
 import com.google.common.collect.Ordering;
 import dev.terminalmc.effecttimerplus.config.Config;
 import dev.terminalmc.effecttimerplus.util.MiscUtil;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.spongepowered.asm.mixin.Final;
@@ -31,7 +29,7 @@ public class MixinGui {
     private Minecraft minecraft;
 
     @Inject(method = "renderEffects", at = @At("HEAD"))
-    private void scaleGraphics(GuiGraphics graphics, DeltaTracker delta, CallbackInfo ci) {
+    private void scaleGraphics(GuiGraphics graphics, CallbackInfo ci) {
         float scale = (float) Config.get().scale;
         graphics.pose().pushPose();
         graphics.pose().translate(graphics.guiWidth() * (1 - scale), 0.0F, 0.0F);
@@ -39,7 +37,7 @@ public class MixinGui {
     }
 
     @Inject(method = "renderEffects", at = @At("RETURN"))
-    private void descaleGraphicsAndOverlay(GuiGraphics graphics, DeltaTracker delta, CallbackInfo ci) {
+    private void descaleGraphicsAndOverlay(GuiGraphics graphics, CallbackInfo ci) {
         // Replicate vanilla placement algorithm to place labels correctly
         Collection<MobEffectInstance> effects = this.minecraft.player.getActiveEffects();
         if (!effects.isEmpty()) {
@@ -48,7 +46,7 @@ public class MixinGui {
             int nonBeneficialCount = 0;
 
             for (MobEffectInstance effectInstance : Ordering.natural().reverse().sortedCopy(effects)) {
-                Holder<MobEffect> effect = effectInstance.getEffect();
+                MobEffect effect = effectInstance.getEffect();
                 if (effectInstance.showIcon()) {
                     int x = graphics.guiWidth();
                     int y = 1;
@@ -56,7 +54,7 @@ public class MixinGui {
                         y += 15;
                     }
 
-                    if (effect.value().isBeneficial()) {
+                    if (effect.isBeneficial()) {
                         ++beneficialCount;
                         x -= 25 * beneficialCount;
                     } else {
@@ -88,7 +86,7 @@ public class MixinGui {
                     }
                 }
             }
-            graphics.pose().popPose();
         }
+        graphics.pose().popPose();
     }
 }
