@@ -26,6 +26,8 @@ import dev.terminalmc.effecttimerplus.util.IndicatorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 
@@ -363,11 +365,17 @@ public class YaclScreenProvider {
 
             for (MobEffectInstance effect : DEMO_EFFECTS) {
                 if (effect.isAmbient()) {
-                    graphics.blitSprite(GuiAccessor.getEffectBackgroundAmbientSprite(), movingX, movingY, spriteSize, spriteSize);
+                    graphics.blitSprite(RenderType::guiTextured, 
+                            GuiAccessor.getEffectBackgroundAmbientSprite(), 
+                            movingX, movingY, spriteSize, spriteSize);
                 } else {
-                    graphics.blitSprite(GuiAccessor.getEffectBackgroundSprite(), movingX, movingY, spriteSize, spriteSize);
+                    graphics.blitSprite(RenderType::guiTextured, 
+                            GuiAccessor.getEffectBackgroundSprite(), 
+                            movingX, movingY, spriteSize, spriteSize);
                 }
-                graphics.blit(movingX + 3, movingY + 3, 0, iconSize, iconSize, mc.getMobEffectTextures().get(effect.getEffect()));
+                graphics.blitSprite(RenderType::guiTextured, 
+                        mc.getMobEffectTextures().get(effect.getEffect()), 
+                        movingX + 3, movingY + 3, iconSize, iconSize, ARGB.white(1.0F));
 
                 // Render potency overlay
                 if (potencyEnabled && effect.getAmplifier() > 0) {
