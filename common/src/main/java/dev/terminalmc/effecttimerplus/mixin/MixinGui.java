@@ -27,6 +27,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.Nullable;
@@ -36,6 +37,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
+import java.util.function.Function;
 
 import static dev.terminalmc.effecttimerplus.util.IndicatorUtil.*;
 
@@ -77,13 +79,14 @@ public class MixinGui {
             method = "renderEffects",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lnet/minecraft/resources/ResourceLocation;IIII)V"
+                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIII)V"
             )
     )
-    private void CreateOverlayRunnable(GuiGraphics graphics, ResourceLocation sprite, int x, int y,
-                                       int width, int height, Operation<Void> original,
-                                       @Local MobEffectInstance effectInstance) {
-        original.call(graphics, sprite, x, y, width, height);
+    private void CreateOverlayRunnable(
+            GuiGraphics graphics, Function<ResourceLocation, RenderType> function, 
+            ResourceLocation sprite, int x, int y, int width, int height, 
+            Operation<Void> original, @Local MobEffectInstance effectInstance) {
+        original.call(graphics, function, sprite, x, y, width, height);
 
         Config options = Config.get();
         effectTimerPlus$runnable = () -> {
