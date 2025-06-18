@@ -18,16 +18,15 @@
 
 package dev.terminalmc.effecttimerplus.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import dev.terminalmc.effecttimerplus.config.Config;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.Nullable;
@@ -35,9 +34,6 @@ import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.List;
-import java.util.function.Function;
 
 import static dev.terminalmc.effecttimerplus.util.IndicatorUtil.*;
 
@@ -62,9 +58,9 @@ public class MixinGui {
     )
     private void scale(GuiGraphics graphics, DeltaTracker delta, CallbackInfo ci) {
         float scale = (float) Config.get().scale;
-        graphics.pose().pushPose();
-        graphics.pose().translate(graphics.guiWidth() * (1 - scale), 0.0F, 0.0F);
-        graphics.pose().scale(scale, scale, 0.0F);
+        graphics.pose().pushMatrix();
+        graphics.pose().translate(graphics.guiWidth() * (1 - scale), 0.0F);
+        graphics.pose().scale(scale, scale);
     }
 
     @Inject(
@@ -72,21 +68,20 @@ public class MixinGui {
             at = @At("RETURN")
     )
     private void descale(GuiGraphics graphics, DeltaTracker delta, CallbackInfo ci) {
-        graphics.pose().popPose();
+        graphics.pose().popMatrix();
     }
 
     @WrapOperation(
             method = "renderEffects",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Ljava/util/function/Function;Lnet/minecraft/resources/ResourceLocation;IIII)V"
+                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIII)V"
             )
     )
-    private void CreateOverlayRunnable(
-            GuiGraphics graphics, Function<ResourceLocation, RenderType> function, 
-            ResourceLocation sprite, int x, int y, int width, int height, 
-            Operation<Void> original, @Local MobEffectInstance effectInstance) {
-        original.call(graphics, function, sprite, x, y, width, height);
+    private void CreateOverlayRunnable(GuiGraphics graphics, RenderPipeline pipeline,
+                                       ResourceLocation sprite, int x, int y, int width, int height,
+                                       Operation<Void> original, @Local MobEffectInstance effectInstance) {
+        original.call(graphics, pipeline, sprite, x, y, width, height);
 
         Config options = Config.get();
         effectTimerPlus$runnable = () -> {
@@ -98,17 +93,17 @@ public class MixinGui {
                 int posY = y + getTextOffsetY(options.potencyLocation, minecraft.font.lineHeight, height);
 
                 float scale = (float)Config.get().potencyScale;
-                graphics.pose().pushPose();
-                graphics.pose().translate(posX * (1 - scale), posY * (1 - scale), 0.0F);
+                graphics.pose().pushMatrix();
+                graphics.pose().translate(posX * (1 - scale), posY * (1 - scale));
                 graphics.pose().translate(getScaleTranslateX(options.potencyLocation, labelWidth, scale),
-                        getScaleTranslateY(options.potencyLocation, minecraft.font.lineHeight, scale), 0.0F);
-                graphics.pose().scale(scale, scale, 0.0F);
+                        getScaleTranslateY(options.potencyLocation, minecraft.font.lineHeight, scale));
+                graphics.pose().scale(scale, scale);
                 if (options.potencyBack) {
                     graphics.fill(posX - 1, posY - 1, posX + labelWidth,
                             posY + minecraft.font.lineHeight - 1, options.potencyBackColor);
                 }
                 graphics.drawString(minecraft.font, label, posX, posY, options.potencyColor, options.potencyShadow);
-                graphics.pose().popPose();
+                graphics.pose().popMatrix();
             }
             // Render timer overlay
             if (options.timerEnabled && (options.timerEnabledAmbient || !effectInstance.isAmbient())) {
@@ -121,33 +116,32 @@ public class MixinGui {
                         options.timerWarnEnabled, options.timerWarnTime,
                         options.timerWarnColor, options.timerFlashEnabled);
                 float scale = (float)Config.get().timerScale;
-                graphics.pose().pushPose();
-                graphics.pose().translate(posX * (1 - scale), posY * (1 - scale), 0.0F);
+                graphics.pose().pushMatrix();
+                graphics.pose().translate(posX * (1 - scale), posY * (1 - scale));
                 graphics.pose().translate(getScaleTranslateX(options.timerLocation, labelWidth, scale),
-                        getScaleTranslateY(options.timerLocation, minecraft.font.lineHeight, scale), 0.0F);
-                graphics.pose().scale(scale, scale, 0.0F);
+                        getScaleTranslateY(options.timerLocation, minecraft.font.lineHeight, scale));
+                graphics.pose().scale(scale, scale);
                 if (options.timerBack) {
                     graphics.fill(posX - 1, posY - 1, posX + labelWidth,
                             posY + minecraft.font.lineHeight - 1, options.timerBackColor);
                 }
                 graphics.drawString(minecraft.font, label, posX, posY, color, options.timerShadow);
-                graphics.pose().popPose();
+                graphics.pose().popMatrix();
             }
         };
     }
 
-    @ModifyExpressionValue(
+    @Inject(
             method = "renderEffects",
             at = @At(
                     value = "INVOKE",
-                    target = "Ljava/util/List;add(Ljava/lang/Object;)Z"
+                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIIII)V",
+                    shift = At.Shift.AFTER
             )
     )
-    private boolean AddOverlayRunnable(boolean original, @Local List<Runnable> runnables) {
+    private void AddOverlayRunnable(GuiGraphics graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         if (effectTimerPlus$runnable != null) {
-            runnables.add(effectTimerPlus$runnable);
-            effectTimerPlus$runnable = null;
+            effectTimerPlus$runnable.run();
         }
-        return original;
     }
 }

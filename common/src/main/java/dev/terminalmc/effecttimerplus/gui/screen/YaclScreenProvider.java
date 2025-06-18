@@ -24,9 +24,10 @@ import dev.terminalmc.effecttimerplus.config.Config;
 import dev.terminalmc.effecttimerplus.mixin.accessor.GuiAccessor;
 import dev.terminalmc.effecttimerplus.util.IndicatorUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -334,12 +335,12 @@ public class YaclScreenProvider {
 
         // Params: effect, duration, amplifier, ambient, visible
         private final MobEffectInstance[] DEMO_EFFECTS = new MobEffectInstance[] {
-                new MobEffectInstance(MobEffects.DIG_SPEED, 111, 1, true, true),
-                new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 211, 1, false, true),
-                new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 411, 2, false, true),
-                new MobEffectInstance(MobEffects.DAMAGE_BOOST, 811, 9, false, true),
-                new MobEffectInstance(MobEffects.JUMP, 1251, 4, false, true),
-                new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 2131, 0, false, true),
+                new MobEffectInstance(MobEffects.HASTE, 111, 1, true, true),
+                new MobEffectInstance(MobEffects.RESISTANCE, 211, 1, false, true),
+                new MobEffectInstance(MobEffects.SPEED, 411, 2, false, true),
+                new MobEffectInstance(MobEffects.STRENGTH, 811, 9, false, true),
+                new MobEffectInstance(MobEffects.JUMP_BOOST, 1251, 4, false, true),
+                new MobEffectInstance(MobEffects.SLOWNESS, 2131, 0, false, true),
                 new MobEffectInstance(MobEffects.WEAKNESS, 3500, 1, false, true),
                 new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 9600, 0, false, true),
                 new MobEffectInstance(MobEffects.INVISIBILITY, 144000, 0, false, true),
@@ -349,9 +350,9 @@ public class YaclScreenProvider {
         @Override
         public int render(GuiGraphics graphics, int x, int y, int width, float delta) {
             float scale = (float)this.scale;
-            graphics.pose().pushPose();
-            graphics.pose().translate(x * (1 - scale), y * (1 - scale), 0.0F);
-            graphics.pose().scale(scale, scale, 0.0F);
+            graphics.pose().pushMatrix();
+            graphics.pose().translate(x * (1 - scale), y * (1 - scale));
+            graphics.pose().scale(scale, scale);
 
             Minecraft mc = Minecraft.getInstance();
             int movingX = x;
@@ -365,16 +366,16 @@ public class YaclScreenProvider {
 
             for (MobEffectInstance effect : DEMO_EFFECTS) {
                 if (effect.isAmbient()) {
-                    graphics.blitSprite(RenderType::guiTextured, 
+                    graphics.blitSprite(RenderPipelines.GUI_TEXTURED,
                             GuiAccessor.getEffectBackgroundAmbientSprite(), 
                             movingX, movingY, spriteSize, spriteSize);
                 } else {
-                    graphics.blitSprite(RenderType::guiTextured, 
+                    graphics.blitSprite(RenderPipelines.GUI_TEXTURED,
                             GuiAccessor.getEffectBackgroundSprite(), 
                             movingX, movingY, spriteSize, spriteSize);
                 }
-                graphics.blitSprite(RenderType::guiTextured, 
-                        mc.getMobEffectTextures().get(effect.getEffect()), 
+                graphics.blitSprite(RenderPipelines.GUI_TEXTURED,
+                        Gui.getMobEffectSprite(effect.getEffect()),
                         movingX + 3, movingY + 3, iconSize, iconSize, ARGB.white(1.0F));
 
                 // Render potency overlay
@@ -384,16 +385,16 @@ public class YaclScreenProvider {
                     int pX = movingX + IndicatorUtil.getTextOffsetX(potencyLocation, labelWidth, spriteSize);
                     int pY = movingY + IndicatorUtil.getTextOffsetY(potencyLocation, mc.font.lineHeight, spriteSize);
 
-                    graphics.pose().pushPose();
-                    graphics.pose().translate(pX * (1 - potencyScale), pY * (1 - potencyScale), 0.0F);
+                    graphics.pose().pushMatrix();
+                    graphics.pose().translate((float)(pX * (1 - potencyScale)), (float)(pY * (1 - potencyScale)));
                     graphics.pose().translate(getScaleTranslateX(potencyLocation, labelWidth, (float)potencyScale),
-                            getScaleTranslateY(potencyLocation, mc.font.lineHeight, (float)potencyScale), 0.0F);
-                    graphics.pose().scale((float)potencyScale, (float)potencyScale, 0.0F);
+                            getScaleTranslateY(potencyLocation, mc.font.lineHeight, (float)potencyScale));
+                    graphics.pose().scale((float)potencyScale, (float)potencyScale);
                     if (potencyBack) {
                         graphics.fill(pX - 1, pY - 1, pX + labelWidth, pY + mc.font.lineHeight - 1, potencyBackColor);
                     }
                     graphics.drawString(mc.font, label, pX, pY, potencyColor, potencyShadow);
-                    graphics.pose().popPose();
+                    graphics.pose().popMatrix();
                 }
                 // Render timer overlay
                 if (timerEnabled && (timerEnabledAmbient || !effect.isAmbient())) {
@@ -402,17 +403,17 @@ public class YaclScreenProvider {
                     int pX = movingX + IndicatorUtil.getTextOffsetX(timerLocation, labelWidth, spriteSize);
                     int pY = movingY + IndicatorUtil.getTextOffsetY(timerLocation, mc.font.lineHeight, spriteSize);
 
-                    graphics.pose().pushPose();
-                    graphics.pose().translate(pX * (1 - timerScale), pY * (1 - timerScale), 0.0F);
+                    graphics.pose().pushMatrix();
+                    graphics.pose().translate((float)(pX * (1 - timerScale)), (float)(pY * (1 - timerScale)));
                     graphics.pose().translate(getScaleTranslateX(timerLocation, labelWidth, (float)timerScale),
-                            getScaleTranslateY(timerLocation, mc.font.lineHeight, (float)timerScale), 0.0F);
-                    graphics.pose().scale((float)timerScale, (float)timerScale, 0.0F);
+                            getScaleTranslateY(timerLocation, mc.font.lineHeight, (float)timerScale));
+                    graphics.pose().scale((float)timerScale, (float)timerScale);
                     if (timerBack) {
                         graphics.fill(pX - 1, pY - 1, pX + labelWidth, pY + mc.font.lineHeight - 1, timerBackColor);
                     }
                     graphics.drawString(mc.font, label, pX, pY, IndicatorUtil.getTimerColor(effect, timerColor,
                             timerWarnEnabled, timerWarnTime, timerWarnColor, timerFlashEnabled), timerShadow);
-                    graphics.pose().popPose();
+                    graphics.pose().popMatrix();
                 }
                 movingX += space;
                 if (movingX + space > maxX) {
@@ -422,7 +423,7 @@ public class YaclScreenProvider {
                 }
             }
 
-            graphics.pose().popPose();
+            graphics.pose().popMatrix();
             return (int)(targetHeight * scale);
         }
 
