@@ -21,7 +21,9 @@ import dev.terminalmc.effecttimerplus.EffectTimerPlus;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
+@SuppressWarnings("unused")
 public final class Localization {
+
     public static String translationKey(String path) {
         return EffectTimerPlus.MOD_ID + "." + path;
     }

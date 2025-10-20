@@ -30,7 +30,10 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -41,7 +44,10 @@ import static dev.terminalmc.effecttimerplus.util.IndicatorUtil.*;
  * This file includes derivative work of code from
  * <a href="https://github.com/magicus/statuseffecttimer">Status Effect Timer</a>
  */
-@Mixin(value = Gui.class, priority = 2000)
+@Mixin(
+        value = Gui.class,
+        priority = 2000
+)
 public class MixinGui {
 
     @Final
@@ -78,9 +84,11 @@ public class MixinGui {
                     target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/ResourceLocation;IIII)V"
             )
     )
-    private void CreateOverlayRunnable(GuiGraphics graphics, RenderPipeline pipeline,
-                                       ResourceLocation sprite, int x, int y, int width, int height,
-                                       Operation<Void> original, @Local MobEffectInstance effectInstance) {
+    private void CreateOverlayRunnable(
+            GuiGraphics graphics, RenderPipeline pipeline,
+            ResourceLocation sprite, int x, int y, int width, int height,
+            Operation<Void> original, @Local MobEffectInstance effectInstance
+    ) {
         original.call(graphics, pipeline, sprite, x, y, width, height);
 
         Config options = Config.get();
@@ -90,40 +98,70 @@ public class MixinGui {
                 String label = getAmplifierAsString(effectInstance.getAmplifier());
                 int labelWidth = minecraft.font.width(label);
                 int posX = x + getTextOffsetX(options.potencyLocation, labelWidth, width);
-                int posY = y + getTextOffsetY(options.potencyLocation, minecraft.font.lineHeight, height);
+                int posY = y + getTextOffsetY(
+                        options.potencyLocation,
+                        minecraft.font.lineHeight,
+                        height
+                );
 
-                float scale = (float)Config.get().potencyScale;
+                float scale = (float) Config.get().potencyScale;
                 graphics.pose().pushMatrix();
                 graphics.pose().translate(posX * (1 - scale), posY * (1 - scale));
-                graphics.pose().translate(getScaleTranslateX(options.potencyLocation, labelWidth, scale),
-                        getScaleTranslateY(options.potencyLocation, minecraft.font.lineHeight, scale));
+                graphics.pose().translate(
+                        getScaleTranslateX(options.potencyLocation, labelWidth, scale),
+                        getScaleTranslateY(
+                                options.potencyLocation,
+                                minecraft.font.lineHeight,
+                                scale
+                        )
+                );
                 graphics.pose().scale(scale, scale);
                 if (options.potencyBack) {
-                    graphics.fill(posX - 1, posY - 1, posX + labelWidth,
-                            posY + minecraft.font.lineHeight - 1, options.potencyBackColor);
+                    graphics.fill(
+                            posX - 1, posY - 1, posX + labelWidth,
+                            posY + minecraft.font.lineHeight - 1, options.potencyBackColor
+                    );
                 }
-                graphics.drawString(minecraft.font, label, posX, posY, options.potencyColor, options.potencyShadow);
+                graphics.drawString(
+                        minecraft.font,
+                        label,
+                        posX,
+                        posY,
+                        options.potencyColor,
+                        options.potencyShadow
+                );
                 graphics.pose().popMatrix();
             }
             // Render timer overlay
-            if (options.timerEnabled && (options.timerEnabledAmbient || !effectInstance.isAmbient())) {
+            if (options.timerEnabled && (options.timerEnabledAmbient
+                    || !effectInstance.isAmbient())) {
                 String label = getDurationAsString(effectInstance.getDuration());
                 int labelWidth = minecraft.font.width(label);
                 int posX = x + getTextOffsetX(options.timerLocation, labelWidth, width);
-                int posY = y + getTextOffsetY(options.timerLocation, minecraft.font.lineHeight, height);
+                int posY = y + getTextOffsetY(
+                        options.timerLocation,
+                        minecraft.font.lineHeight,
+                        height
+                );
 
-                int color = getTimerColor(effectInstance, options.timerColor,
+                int color = getTimerColor(
+                        effectInstance, options.timerColor,
                         options.timerWarnEnabled, options.timerWarnTime,
-                        options.timerWarnColor, options.timerFlashEnabled);
-                float scale = (float)Config.get().timerScale;
+                        options.timerWarnColor, options.timerFlashEnabled
+                );
+                float scale = (float) Config.get().timerScale;
                 graphics.pose().pushMatrix();
                 graphics.pose().translate(posX * (1 - scale), posY * (1 - scale));
-                graphics.pose().translate(getScaleTranslateX(options.timerLocation, labelWidth, scale),
-                        getScaleTranslateY(options.timerLocation, minecraft.font.lineHeight, scale));
+                graphics.pose().translate(
+                        getScaleTranslateX(options.timerLocation, labelWidth, scale),
+                        getScaleTranslateY(options.timerLocation, minecraft.font.lineHeight, scale)
+                );
                 graphics.pose().scale(scale, scale);
                 if (options.timerBack) {
-                    graphics.fill(posX - 1, posY - 1, posX + labelWidth,
-                            posY + minecraft.font.lineHeight - 1, options.timerBackColor);
+                    graphics.fill(
+                            posX - 1, posY - 1, posX + labelWidth,
+                            posY + minecraft.font.lineHeight - 1, options.timerBackColor
+                    );
                 }
                 graphics.drawString(minecraft.font, label, posX, posY, color, options.timerShadow);
                 graphics.pose().popMatrix();
@@ -139,7 +177,11 @@ public class MixinGui {
                     shift = At.Shift.AFTER
             )
     )
-    private void AddOverlayRunnable(GuiGraphics graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+    private void AddOverlayRunnable(
+            GuiGraphics graphics,
+            DeltaTracker deltaTracker,
+            CallbackInfo ci
+    ) {
         if (effectTimerPlus$runnable != null) {
             effectTimerPlus$runnable.run();
         }

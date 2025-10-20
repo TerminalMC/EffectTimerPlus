@@ -17,7 +17,10 @@
 
 package dev.terminalmc.effecttimerplus.gui.screen;
 
-import dev.isxander.yacl3.api.*;
+import dev.isxander.yacl3.api.ConfigCategory;
+import dev.isxander.yacl3.api.Option;
+import dev.isxander.yacl3.api.OptionDescription;
+import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.*;
 import dev.isxander.yacl3.gui.image.ImageRenderer;
 import dev.terminalmc.effecttimerplus.config.Config;
@@ -41,8 +44,10 @@ import static dev.terminalmc.effecttimerplus.util.IndicatorUtil.getScaleTranslat
 import static dev.terminalmc.effecttimerplus.util.Localization.localized;
 
 public class YaclScreenProvider {
+
     /**
      * Builds and returns a YACL options screen.
+     *
      * @param parent the current screen.
      * @return a new options {@link Screen}.
      * @throws NoClassDefFoundError if the YACL mod is not available.
@@ -62,9 +67,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "timer.enabled"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.timerEnabled = option.pendingValue())
-                .binding(Config.defaultTimerEnabled,
+                .binding(
+                        Config.defaultTimerEnabled,
                         () -> options.timerEnabled,
-                        val -> options.timerEnabled = val)
+                        val -> options.timerEnabled = val
+                )
                 .controller(option -> BooleanControllerBuilder.create(option).coloured(true))
                 .build());
 
@@ -72,9 +79,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "timer.ambient.enabled"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.timerEnabledAmbient = option.pendingValue())
-                .binding(Config.defaultTimerEnabledAmbient,
+                .binding(
+                        Config.defaultTimerEnabledAmbient,
                         () -> options.timerEnabledAmbient,
-                        val -> options.timerEnabledAmbient = val)
+                        val -> options.timerEnabledAmbient = val
+                )
                 .controller(option -> BooleanControllerBuilder.create(option).coloured(true))
                 .build());
 
@@ -82,9 +91,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "timer.warn.enabled"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.timerWarnEnabled = option.pendingValue())
-                .binding(Config.defaultTimerWarnEnabled,
+                .binding(
+                        Config.defaultTimerWarnEnabled,
                         () -> options.timerWarnEnabled,
-                        val -> options.timerWarnEnabled = val)
+                        val -> options.timerWarnEnabled = val
+                )
                 .controller(option -> BooleanControllerBuilder.create(option).coloured(true))
                 .build());
 
@@ -92,19 +103,24 @@ public class YaclScreenProvider {
                 .name(localized("option", "timer.warn.flash.enabled"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.timerFlashEnabled = option.pendingValue())
-                .binding(Config.defaultTimerFlashEnabled,
+                .binding(
+                        Config.defaultTimerFlashEnabled,
                         () -> options.timerFlashEnabled,
-                        val -> options.timerFlashEnabled = val)
+                        val -> options.timerFlashEnabled = val
+                )
                 .controller(option -> BooleanControllerBuilder.create(option).coloured(true))
                 .build());
 
         timerCat.option(Option.<Color>createBuilder()
                 .name(localized("option", "timer.color"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
-                .addListener((option, event) -> preview.timerColor = fixAlpha(option.pendingValue().getRGB()))
-                .binding(fromArgb(Config.defaultTimerColor),
+                .addListener((option, event) -> preview.timerColor =
+                        fixAlpha(option.pendingValue().getRGB()))
+                .binding(
+                        fromArgb(Config.defaultTimerColor),
                         () -> fromArgb(options.timerColor),
-                        val -> options.timerColor = fixAlpha(val.getRGB()))
+                        val -> options.timerColor = fixAlpha(val.getRGB())
+                )
                 .controller(option -> ColorControllerBuilder.create(option).allowAlpha(true))
                 .build());
 
@@ -112,9 +128,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "timer.shadow.enabled"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.timerShadow = option.pendingValue())
-                .binding(Config.defaultTimerShadow,
+                .binding(
+                        Config.defaultTimerShadow,
                         () -> options.timerShadow,
-                        val -> options.timerShadow = val)
+                        val -> options.timerShadow = val
+                )
                 .controller(option -> BooleanControllerBuilder.create(option).coloured(true))
                 .build());
 
@@ -122,29 +140,37 @@ public class YaclScreenProvider {
                 .name(localized("option", "timer.back.enabled"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.timerBack = option.pendingValue())
-                .binding(Config.defaultTimerBack,
+                .binding(
+                        Config.defaultTimerBack,
                         () -> options.timerBack,
-                        val -> options.timerBack = val)
+                        val -> options.timerBack = val
+                )
                 .controller(option -> BooleanControllerBuilder.create(option).coloured(true))
                 .build());
 
         timerCat.option(Option.<Color>createBuilder()
                 .name(localized("option", "timer.back.color"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
-                .addListener((option, event) -> preview.timerBackColor = fixAlpha(option.pendingValue().getRGB()))
-                .binding(fromArgb(Config.defaultTimerBackColor),
+                .addListener((option, event) -> preview.timerBackColor =
+                        fixAlpha(option.pendingValue().getRGB()))
+                .binding(
+                        fromArgb(Config.defaultTimerBackColor),
                         () -> fromArgb(options.timerBackColor),
-                        val -> options.timerBackColor = fixAlpha(val.getRGB()))
+                        val -> options.timerBackColor = fixAlpha(val.getRGB())
+                )
                 .controller(option -> ColorControllerBuilder.create(option).allowAlpha(true))
                 .build());
 
         timerCat.option(Option.<Color>createBuilder()
                 .name(localized("option", "timer.warn.color"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
-                .addListener((option, event) -> preview.timerWarnColor = fixAlpha(option.pendingValue().getRGB()))
-                .binding(fromArgb(Config.defaultTimerWarnColor),
+                .addListener((option, event) -> preview.timerWarnColor =
+                        fixAlpha(option.pendingValue().getRGB()))
+                .binding(
+                        fromArgb(Config.defaultTimerWarnColor),
                         () -> fromArgb(options.timerWarnColor),
-                        val -> options.timerWarnColor = fixAlpha(val.getRGB()))
+                        val -> options.timerWarnColor = fixAlpha(val.getRGB())
+                )
                 .controller(option -> ColorControllerBuilder.create(option).allowAlpha(true))
                 .build());
 
@@ -152,9 +178,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "timer.warn.time"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.timerWarnTime = option.pendingValue())
-                .binding(Config.defaultTimerWarnTime,
+                .binding(
+                        Config.defaultTimerWarnTime,
                         () -> options.timerWarnTime,
-                        val -> options.timerWarnTime = val)
+                        val -> options.timerWarnTime = val
+                )
                 .controller(option -> IntegerSliderControllerBuilder.create(option)
                         .range(0, 60)
                         .step(1)
@@ -166,9 +194,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "timer.location"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.timerLocation = option.pendingValue())
-                .binding(Config.defaultTimerLocation,
+                .binding(
+                        Config.defaultTimerLocation,
                         () -> options.timerLocation,
-                        val -> options.timerLocation = val)
+                        val -> options.timerLocation = val
+                )
                 .controller(option -> CyclingListControllerBuilder.create(option)
                         .values(Config.locations)
                         .formatValue(val -> localized("option", "location." + val)))
@@ -182,19 +212,24 @@ public class YaclScreenProvider {
                 .name(localized("option", "potency.enabled"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.potencyEnabled = option.pendingValue())
-                .binding(Config.defaultPotencyEnabled,
+                .binding(
+                        Config.defaultPotencyEnabled,
                         () -> options.potencyEnabled,
-                        val -> options.potencyEnabled = val)
+                        val -> options.potencyEnabled = val
+                )
                 .controller(option -> BooleanControllerBuilder.create(option).coloured(true))
                 .build());
 
         potencyCat.option(Option.<Color>createBuilder()
                 .name(localized("option", "potency.color"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
-                .addListener((option, event) -> preview.potencyColor = fixAlpha(option.pendingValue().getRGB()))
-                .binding(fromArgb(Config.defaultPotencyColor),
+                .addListener((option, event) -> preview.potencyColor =
+                        fixAlpha(option.pendingValue().getRGB()))
+                .binding(
+                        fromArgb(Config.defaultPotencyColor),
                         () -> fromArgb(options.potencyColor),
-                        val -> options.potencyColor = fixAlpha(val.getRGB()))
+                        val -> options.potencyColor = fixAlpha(val.getRGB())
+                )
                 .controller(option -> ColorControllerBuilder.create(option).allowAlpha(true))
                 .build());
 
@@ -202,9 +237,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "potency.shadow.enabled"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.potencyShadow = option.pendingValue())
-                .binding(Config.defaultPotencyShadow,
+                .binding(
+                        Config.defaultPotencyShadow,
                         () -> options.potencyShadow,
-                        val -> options.potencyShadow = val)
+                        val -> options.potencyShadow = val
+                )
                 .controller(option -> BooleanControllerBuilder.create(option).coloured(true))
                 .build());
 
@@ -212,19 +249,24 @@ public class YaclScreenProvider {
                 .name(localized("option", "potency.back.enabled"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.potencyBack = option.pendingValue())
-                .binding(Config.defaultPotencyBack,
+                .binding(
+                        Config.defaultPotencyBack,
                         () -> options.potencyBack,
-                        val -> options.potencyBack = val)
+                        val -> options.potencyBack = val
+                )
                 .controller(option -> BooleanControllerBuilder.create(option).coloured(true))
                 .build());
 
         potencyCat.option(Option.<Color>createBuilder()
                 .name(localized("option", "potency.back.color"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
-                .addListener((option, event) -> preview.potencyBackColor = fixAlpha(option.pendingValue().getRGB()))
-                .binding(fromArgb(Config.defaultPotencyBackColor),
+                .addListener((option, event) -> preview.potencyBackColor =
+                        fixAlpha(option.pendingValue().getRGB()))
+                .binding(
+                        fromArgb(Config.defaultPotencyBackColor),
                         () -> fromArgb(options.potencyBackColor),
-                        val -> options.potencyBackColor = fixAlpha(val.getRGB()))
+                        val -> options.potencyBackColor = fixAlpha(val.getRGB())
+                )
                 .controller(option -> ColorControllerBuilder.create(option).allowAlpha(true))
                 .build());
 
@@ -232,9 +274,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "potency.location"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.potencyLocation = option.pendingValue())
-                .binding(Config.defaultPotencyLocation,
+                .binding(
+                        Config.defaultPotencyLocation,
                         () -> options.potencyLocation,
-                        val -> options.potencyLocation = val)
+                        val -> options.potencyLocation = val
+                )
                 .controller(option -> CyclingListControllerBuilder.create(option)
                         .values(Config.locations)
                         .formatValue(val -> localized("option", "location." + val)))
@@ -247,9 +291,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "scale.icon"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.scale = option.pendingValue())
-                .binding(Config.defaultScale,
+                .binding(
+                        Config.defaultScale,
                         () -> options.scale,
-                        val -> options.scale = val)
+                        val -> options.scale = val
+                )
                 .controller(option -> DoubleSliderControllerBuilder.create(option)
                         .range(0.5D, 1.5D)
                         .step(0.1D))
@@ -259,9 +305,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "scale.timer"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.timerScale = option.pendingValue())
-                .binding(Config.defaultTimerScale,
+                .binding(
+                        Config.defaultTimerScale,
                         () -> options.timerScale,
-                        val -> options.timerScale = val)
+                        val -> options.timerScale = val
+                )
                 .controller(option -> DoubleSliderControllerBuilder.create(option)
                         .range(0.5D, 1.5D)
                         .step(0.1D))
@@ -271,9 +319,11 @@ public class YaclScreenProvider {
                 .name(localized("option", "scale.potency"))
                 .description(OptionDescription.createBuilder().customImage(preview).build())
                 .addListener((option, event) -> preview.potencyScale = option.pendingValue())
-                .binding(Config.defaultPotencyScale,
+                .binding(
+                        Config.defaultPotencyScale,
                         () -> options.potencyScale,
-                        val -> options.potencyScale = val)
+                        val -> options.potencyScale = val
+                )
                 .controller(option -> DoubleSliderControllerBuilder.create(option)
                         .range(0.5D, 1.5D)
                         .step(0.1D))
@@ -310,6 +360,7 @@ public class YaclScreenProvider {
     // Preview
 
     private static class Preview implements ImageRenderer {
+
         // Maintain a copy of all values for instant update by listeners
         Config options = Config.get();
         public double scale = options.scale;
@@ -334,7 +385,7 @@ public class YaclScreenProvider {
         public int timerLocation = options.timerLocation;
 
         // Params: effect, duration, amplifier, ambient, visible
-        private final MobEffectInstance[] DEMO_EFFECTS = new MobEffectInstance[] {
+        private final MobEffectInstance[] DEMO_EFFECTS = new MobEffectInstance[]{
                 new MobEffectInstance(MobEffects.HASTE, 111, 1, true, true),
                 new MobEffectInstance(MobEffects.RESISTANCE, 211, 1, false, true),
                 new MobEffectInstance(MobEffects.SPEED, 411, 2, false, true),
@@ -349,7 +400,7 @@ public class YaclScreenProvider {
 
         @Override
         public int render(GuiGraphics graphics, int x, int y, int width, float delta) {
-            float scale = (float)this.scale;
+            float scale = (float) this.scale;
             graphics.pose().pushMatrix();
             graphics.pose().translate(x * (1 - scale), y * (1 - scale));
             graphics.pose().scale(scale, scale);
@@ -359,39 +410,69 @@ public class YaclScreenProvider {
             int movingY = y;
             int space = 27;
             int targetHeight = space;
-            int maxX = (int)(x + width / scale);
+            int maxX = (int) (x + width / scale);
 
             int spriteSize = 24;
             int iconSize = 18;
 
             for (MobEffectInstance effect : DEMO_EFFECTS) {
                 if (effect.isAmbient()) {
-                    graphics.blitSprite(RenderPipelines.GUI_TEXTURED,
-                            GuiAccessor.getEffectBackgroundAmbientSprite(), 
-                            movingX, movingY, spriteSize, spriteSize);
+                    graphics.blitSprite(
+                            RenderPipelines.GUI_TEXTURED,
+                            GuiAccessor.etp$getEffectBackgroundAmbientSprite(),
+                            movingX, movingY, spriteSize, spriteSize
+                    );
                 } else {
-                    graphics.blitSprite(RenderPipelines.GUI_TEXTURED,
-                            GuiAccessor.getEffectBackgroundSprite(), 
-                            movingX, movingY, spriteSize, spriteSize);
+                    graphics.blitSprite(
+                            RenderPipelines.GUI_TEXTURED,
+                            GuiAccessor.etp$getEffectBackgroundSprite(),
+                            movingX, movingY, spriteSize, spriteSize
+                    );
                 }
-                graphics.blitSprite(RenderPipelines.GUI_TEXTURED,
+                graphics.blitSprite(
+                        RenderPipelines.GUI_TEXTURED,
                         Gui.getMobEffectSprite(effect.getEffect()),
-                        movingX + 3, movingY + 3, iconSize, iconSize, ARGB.white(1.0F));
+                        movingX + 3, movingY + 3, iconSize, iconSize, ARGB.white(1.0F)
+                );
 
                 // Render potency overlay
                 if (potencyEnabled && effect.getAmplifier() > 0) {
                     String label = IndicatorUtil.getAmplifierAsString(effect.getAmplifier());
                     int labelWidth = mc.font.width(label);
-                    int pX = movingX + IndicatorUtil.getTextOffsetX(potencyLocation, labelWidth, spriteSize);
-                    int pY = movingY + IndicatorUtil.getTextOffsetY(potencyLocation, mc.font.lineHeight, spriteSize);
+                    int pX = movingX + IndicatorUtil.getTextOffsetX(
+                            potencyLocation,
+                            labelWidth,
+                            spriteSize
+                    );
+                    int pY = movingY + IndicatorUtil.getTextOffsetY(
+                            potencyLocation,
+                            mc.font.lineHeight,
+                            spriteSize
+                    );
 
                     graphics.pose().pushMatrix();
-                    graphics.pose().translate((float)(pX * (1 - potencyScale)), (float)(pY * (1 - potencyScale)));
-                    graphics.pose().translate(getScaleTranslateX(potencyLocation, labelWidth, (float)potencyScale),
-                            getScaleTranslateY(potencyLocation, mc.font.lineHeight, (float)potencyScale));
-                    graphics.pose().scale((float)potencyScale, (float)potencyScale);
+                    graphics.pose()
+                            .translate(
+                                    (float) (pX * (1 - potencyScale)),
+                                    (float) (pY * (1 - potencyScale))
+                            );
+                    graphics.pose().translate(
+                            getScaleTranslateX(potencyLocation, labelWidth, (float) potencyScale),
+                            getScaleTranslateY(
+                                    potencyLocation,
+                                    mc.font.lineHeight,
+                                    (float) potencyScale
+                            )
+                    );
+                    graphics.pose().scale((float) potencyScale, (float) potencyScale);
                     if (potencyBack) {
-                        graphics.fill(pX - 1, pY - 1, pX + labelWidth, pY + mc.font.lineHeight - 1, potencyBackColor);
+                        graphics.fill(
+                                pX - 1,
+                                pY - 1,
+                                pX + labelWidth,
+                                pY + mc.font.lineHeight - 1,
+                                potencyBackColor
+                        );
                     }
                     graphics.drawString(mc.font, label, pX, pY, potencyColor, potencyShadow);
                     graphics.pose().popMatrix();
@@ -400,19 +481,51 @@ public class YaclScreenProvider {
                 if (timerEnabled && (timerEnabledAmbient || !effect.isAmbient())) {
                     String label = IndicatorUtil.getDurationAsString(effect.getDuration());
                     int labelWidth = mc.font.width(label);
-                    int pX = movingX + IndicatorUtil.getTextOffsetX(timerLocation, labelWidth, spriteSize);
-                    int pY = movingY + IndicatorUtil.getTextOffsetY(timerLocation, mc.font.lineHeight, spriteSize);
+                    int pX = movingX + IndicatorUtil.getTextOffsetX(
+                            timerLocation,
+                            labelWidth,
+                            spriteSize
+                    );
+                    int pY = movingY + IndicatorUtil.getTextOffsetY(
+                            timerLocation,
+                            mc.font.lineHeight,
+                            spriteSize
+                    );
 
                     graphics.pose().pushMatrix();
-                    graphics.pose().translate((float)(pX * (1 - timerScale)), (float)(pY * (1 - timerScale)));
-                    graphics.pose().translate(getScaleTranslateX(timerLocation, labelWidth, (float)timerScale),
-                            getScaleTranslateY(timerLocation, mc.font.lineHeight, (float)timerScale));
-                    graphics.pose().scale((float)timerScale, (float)timerScale);
+                    graphics.pose()
+                            .translate(
+                                    (float) (pX * (1 - timerScale)),
+                                    (float) (pY * (1 - timerScale))
+                            );
+                    graphics.pose().translate(
+                            getScaleTranslateX(timerLocation, labelWidth, (float) timerScale),
+                            getScaleTranslateY(
+                                    timerLocation,
+                                    mc.font.lineHeight,
+                                    (float) timerScale
+                            )
+                    );
+                    graphics.pose().scale((float) timerScale, (float) timerScale);
                     if (timerBack) {
-                        graphics.fill(pX - 1, pY - 1, pX + labelWidth, pY + mc.font.lineHeight - 1, timerBackColor);
+                        graphics.fill(
+                                pX - 1,
+                                pY - 1,
+                                pX + labelWidth,
+                                pY + mc.font.lineHeight - 1,
+                                timerBackColor
+                        );
                     }
-                    graphics.drawString(mc.font, label, pX, pY, IndicatorUtil.getTimerColor(effect, timerColor,
-                            timerWarnEnabled, timerWarnTime, timerWarnColor, timerFlashEnabled), timerShadow);
+                    graphics.drawString(
+                            mc.font, label, pX, pY, IndicatorUtil.getTimerColor(
+                                    effect,
+                                    timerColor,
+                                    timerWarnEnabled,
+                                    timerWarnTime,
+                                    timerWarnColor,
+                                    timerFlashEnabled
+                            ), timerShadow
+                    );
                     graphics.pose().popMatrix();
                 }
                 movingX += space;
@@ -424,7 +537,7 @@ public class YaclScreenProvider {
             }
 
             graphics.pose().popMatrix();
-            return (int)(targetHeight * scale);
+            return (int) (targetHeight * scale);
         }
 
         @Override

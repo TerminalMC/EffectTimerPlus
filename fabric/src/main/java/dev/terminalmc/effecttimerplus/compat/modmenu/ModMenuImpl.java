@@ -15,12 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.terminalmc.effecttimerplus.gui.screen;
+package dev.terminalmc.effecttimerplus.compat.modmenu;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
+import dev.terminalmc.effecttimerplus.gui.screen.ConfigScreenProvider;
 
-public class ModMenuIntegration implements ModMenuApi {
+public class ModMenuImpl implements ModMenuApi {
+
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return ConfigScreenProvider::getConfigScreen;

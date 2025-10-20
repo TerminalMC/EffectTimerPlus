@@ -24,13 +24,14 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(Gui.class)
 public interface GuiAccessor {
+
     @Accessor("EFFECT_BACKGROUND_SPRITE")
-    static ResourceLocation getEffectBackgroundSprite() {
+    static ResourceLocation etp$getEffectBackgroundSprite() {
         throw new AssertionError();
     }
 
     @Accessor("EFFECT_BACKGROUND_AMBIENT_SPRITE")
-    static ResourceLocation getEffectBackgroundAmbientSprite() {
+    static ResourceLocation etp$getEffectBackgroundAmbientSprite() {
         throw new UnsupportedOperationException();
     }
 }
