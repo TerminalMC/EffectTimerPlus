@@ -18,7 +18,7 @@
 package dev.terminalmc.effecttimerplus.mixin.accessor;
 
 import net.minecraft.client.gui.Gui;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
@@ -26,12 +26,12 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface GuiAccessor {
 
     @Accessor("EFFECT_BACKGROUND_SPRITE")
-    static ResourceLocation etp$getEffectBackgroundSprite() {
+    static Identifier etp$getEffectBackgroundSprite() {
         throw new AssertionError();
     }
 
     @Accessor("EFFECT_BACKGROUND_AMBIENT_SPRITE")
-    static ResourceLocation etp$getEffectBackgroundAmbientSprite() {
+    static Identifier etp$getEffectBackgroundAmbientSprite() {
         throw new UnsupportedOperationException();
     }
 }
