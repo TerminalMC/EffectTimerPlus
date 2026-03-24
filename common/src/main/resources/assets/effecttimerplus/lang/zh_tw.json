@@ -2,6 +2,7 @@
   "effecttimerplus.name": "EffectTimerPlus",
   "message.effecttimerplus.viewModrinth": "在 Modrinth 上瀏覽",
   "message.effecttimerplus.installYacl": "安裝 YetAnotherConfigLib 以調整模組選項",
+  "message.effecttimerplus.configScreenDisabled": "Config screen is not available on this version.",
   "option.effecttimerplus.location.0": "左上",
   "option.effecttimerplus.location.1": "正上方",
   "option.effecttimerplus.location.2": "右上",

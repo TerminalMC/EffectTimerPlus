@@ -1,6 +1,6 @@
 /*
  * EffectTimerPlus
- * Copyright (C) 2025 TerminalMC
+ * Copyright (C) 2026 TerminalMC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,13 +17,13 @@
 
 package dev.terminalmc.effecttimerplus.platform;
 
-import dev.terminalmc.effecttimerplus.platform.services.IPlatformServices;
+import dev.terminalmc.effecttimerplus.platform.services.PlatformServices;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.fml.loading.FMLPaths;
 
 import java.nio.file.Path;
 
-public class NeoForgeServices implements IPlatformServices {
+public class NeoForgeServices implements PlatformServices {
 
     @Override
     public boolean isDevEnv() {

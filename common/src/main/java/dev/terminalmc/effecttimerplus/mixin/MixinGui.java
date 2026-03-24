@@ -1,7 +1,7 @@
 /*
  * EffectTimerPlus
  * Copyright (C) 2024 magicus
- * Copyright (C) 2025 TerminalMC
+ * Copyright (C) 2026 TerminalMC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -26,7 +26,7 @@ import dev.terminalmc.effecttimerplus.config.Config;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.Nullable;
@@ -48,7 +48,7 @@ import static dev.terminalmc.effecttimerplus.util.IndicatorUtil.*;
         value = Gui.class,
         priority = 2000
 )
-public class MixinGui {
+public abstract class MixinGui {
 
     @Final
     @Shadow
@@ -59,10 +59,10 @@ public class MixinGui {
     private Runnable effectTimerPlus$runnable;
 
     @Inject(
-            method = "renderEffects",
+            method = "extractEffects",
             at = @At("HEAD")
     )
-    private void scale(GuiGraphics graphics, DeltaTracker delta, CallbackInfo ci) {
+    private void scale(GuiGraphicsExtractor graphics, DeltaTracker delta, CallbackInfo ci) {
         float scale = (float) Config.get().scale;
         graphics.pose().pushMatrix();
         graphics.pose().translate(graphics.guiWidth() * (1 - scale), 0.0F);
@@ -70,22 +70,22 @@ public class MixinGui {
     }
 
     @Inject(
-            method = "renderEffects",
+            method = "extractEffects",
             at = @At("RETURN")
     )
-    private void descale(GuiGraphics graphics, DeltaTracker delta, CallbackInfo ci) {
+    private void descale(GuiGraphicsExtractor graphics, DeltaTracker delta, CallbackInfo ci) {
         graphics.pose().popMatrix();
     }
 
     @WrapOperation(
-            method = "renderEffects",
+            method = "extractEffects",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"
+                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"
             )
     )
     private void CreateOverlayRunnable(
-            GuiGraphics graphics, RenderPipeline pipeline,
+            GuiGraphicsExtractor graphics, RenderPipeline pipeline,
             Identifier sprite, int x, int y, int width, int height,
             Operation<Void> original, @Local MobEffectInstance effectInstance
     ) {
@@ -122,7 +122,7 @@ public class MixinGui {
                             posY + minecraft.font.lineHeight - 1, options.potencyBackColor
                     );
                 }
-                graphics.drawString(
+                graphics.text(
                         minecraft.font,
                         label,
                         posX,
@@ -163,22 +163,22 @@ public class MixinGui {
                             posY + minecraft.font.lineHeight - 1, options.timerBackColor
                     );
                 }
-                graphics.drawString(minecraft.font, label, posX, posY, color, options.timerShadow);
+                graphics.text(minecraft.font, label, posX, posY, color, options.timerShadow);
                 graphics.pose().popMatrix();
             }
         };
     }
 
     @Inject(
-            method = "renderEffects",
+            method = "extractEffects",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
+                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
                     shift = At.Shift.AFTER
             )
     )
     private void AddOverlayRunnable(
-            GuiGraphics graphics,
+            GuiGraphicsExtractor graphics,
             DeltaTracker deltaTracker,
             CallbackInfo ci
     ) {

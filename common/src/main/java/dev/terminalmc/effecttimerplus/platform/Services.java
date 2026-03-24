@@ -1,6 +1,6 @@
 /*
  * EffectTimerPlus
- * Copyright (C) 2025 TerminalMC
+ * Copyright (C) 2026 TerminalMC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,21 +17,30 @@
 
 package dev.terminalmc.effecttimerplus.platform;
 
-import dev.terminalmc.effecttimerplus.EffectTimerPlus;
-import dev.terminalmc.effecttimerplus.platform.services.IPlatformServices;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ServiceLoader;
+import java.util.function.Supplier;
 
 public class Services {
 
-    public static final IPlatformServices PLATFORM = load(IPlatformServices.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger("EffectTimerPlus (Service)");
 
     public static <T> T load(Class<T> clazz) {
-        final T loadedService = ServiceLoader.load(clazz)
+        final T loadedService = ServiceLoader.load(clazz, clazz.getClassLoader())
                 .findFirst()
                 .orElseThrow(() -> new NullPointerException(
                         "Failed to load service for " + clazz.getName()));
-        EffectTimerPlus.LOG.debug("Loaded {} for service {}", loadedService, clazz);
+        LOGGER.debug("Loaded {} for service {}", loadedService, clazz);
+        return loadedService;
+    }
+
+    public static <T> T loadOr(Class<T> clazz, Supplier<T> supplier) {
+        final T loadedService = ServiceLoader.load(clazz)
+                .findFirst()
+                .orElse(supplier.get());
+        LOGGER.debug("Loaded {} for service {}", loadedService, clazz);
         return loadedService;
     }
 }

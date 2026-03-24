@@ -1,6 +1,6 @@
 /*
  * EffectTimerPlus
- * Copyright (C) 2025 TerminalMC
+ * Copyright (C) 2026 TerminalMC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -20,7 +20,7 @@ package dev.terminalmc.effecttimerplus.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.terminalmc.effecttimerplus.EffectTimerPlus;
-import dev.terminalmc.effecttimerplus.platform.Services;
+import dev.terminalmc.effecttimerplus.platform.services.PlatformServices;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,7 +33,7 @@ import java.nio.file.StandardCopyOption;
 public class Config {
 
     public final int version = 1;
-    private static final Path DIR_PATH = Services.PLATFORM.getConfigDir();
+    private static final Path DIR_PATH = PlatformServices.getInstance().getConfigDir();
     private static final String FILE_NAME = EffectTimerPlus.MOD_ID + ".json";
     private static final String BACKUP_FILE_NAME = EffectTimerPlus.MOD_ID + ".unreadable.json";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();

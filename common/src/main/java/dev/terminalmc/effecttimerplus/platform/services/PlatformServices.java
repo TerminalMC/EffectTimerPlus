@@ -1,6 +1,6 @@
 /*
  * EffectTimerPlus
- * Copyright (C) 2025 TerminalMC
+ * Copyright (C) 2026 TerminalMC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,10 +17,18 @@
 
 package dev.terminalmc.effecttimerplus.platform.services;
 
+import dev.terminalmc.effecttimerplus.platform.Services;
+
 import java.nio.file.Path;
 
 @SuppressWarnings("unused")
-public interface IPlatformServices {
+public interface PlatformServices {
+
+    PlatformServices INSTANCE = Services.load(PlatformServices.class);
+
+    static PlatformServices getInstance() {
+        return INSTANCE;
+    }
 
     /**
      * @return {@code true} if in a development environment.

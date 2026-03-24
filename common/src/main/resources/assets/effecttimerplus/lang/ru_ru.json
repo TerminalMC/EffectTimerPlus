@@ -2,6 +2,7 @@
   "effecttimerplus.name": "EffectTimerPlus",
   "message.effecttimerplus.viewModrinth": "Посмотреть на Modrinth",
   "message.effecttimerplus.installYacl": "Установите Yet Another Config Lib для доступа к параметрам мода",
+  "message.effecttimerplus.configScreenDisabled": "Config screen is not available on this version.",
   "option.effecttimerplus.location.0": "Верхний левый угол",
   "option.effecttimerplus.location.1": "Вверху по центру",
   "option.effecttimerplus.location.2": "Верхний правый угол",

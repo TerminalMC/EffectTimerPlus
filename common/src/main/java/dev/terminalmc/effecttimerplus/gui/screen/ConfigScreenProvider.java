@@ -1,6 +1,6 @@
 /*
  * EffectTimerPlus
- * Copyright (C) 2025 TerminalMC
+ * Copyright (C) 2026 TerminalMC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,13 +17,13 @@
 
 package dev.terminalmc.effecttimerplus.gui.screen;
 
-import net.minecraft.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.MultiLineTextWidget;
 import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.util.Util;
 
 import static dev.terminalmc.effecttimerplus.util.Localization.localized;
 
@@ -35,13 +35,14 @@ public class ConfigScreenProvider {
 
     public static Screen getConfigScreen(Screen parent) {
         try {
-            return YaclScreenProvider.getConfigScreen(parent);
+//            return YaclScreenProvider.getConfigScreen(parent);
+            return new DisabledScreen(parent);
         } catch (NoClassDefFoundError ignored) {
             return new BackupScreen(parent, "installYacl", "https://modrinth.com/project/1eAoo2KR");
         }
     }
 
-    static class BackupScreen extends Screen {
+    private static class BackupScreen extends Screen {
 
         private final Screen parent;
         private final String modKey;
@@ -93,5 +94,38 @@ public class ConfigScreenProvider {
             Minecraft.getInstance().setScreen(parent);
         }
     }
-}
 
+    private static class DisabledScreen extends Screen {
+
+        private final Screen parent;
+
+        public DisabledScreen(Screen parent) {
+            super(localized("name"));
+            this.parent = parent;
+        }
+
+        @Override
+        public void init() {
+            MultiLineTextWidget messageWidget = new MultiLineTextWidget(
+                    width / 2 - 120,
+                    height / 2 - 40,
+                    localized("message", "configScreenDisabled"),
+                    Minecraft.getInstance().font
+            );
+            messageWidget.setMaxWidth(240);
+            messageWidget.setCentered(true);
+            addRenderableWidget(messageWidget);
+
+            Button exitButton = Button.builder(CommonComponents.GUI_OK, (button) -> onClose())
+                    .pos(width / 2 - 115, height / 2)
+                    .size(230, 20)
+                    .build();
+            addRenderableWidget(exitButton);
+        }
+
+        @Override
+        public void onClose() {
+            Minecraft.getInstance().setScreen(parent);
+        }
+    }
+}

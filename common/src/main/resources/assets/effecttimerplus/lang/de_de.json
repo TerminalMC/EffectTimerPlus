@@ -2,6 +2,7 @@
   "effecttimerplus.name": "EffectTimerPlus",
   "message.effecttimerplus.viewModrinth": "Auf Modrinth anzeigen",
   "message.effecttimerplus.installYacl": "Installiere Yet Another Config Lib, um auf Mod-Einstellungen zuzugreifen",
+  "message.effecttimerplus.configScreenDisabled": "Config screen is not available on this version.",
   "option.effecttimerplus.location.0": "Oben links",
   "option.effecttimerplus.location.1": "Oben mittig",
   "option.effecttimerplus.location.2": "Oben rechts",
