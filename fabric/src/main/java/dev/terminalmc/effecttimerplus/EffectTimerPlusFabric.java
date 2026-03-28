@@ -19,6 +19,7 @@ package dev.terminalmc.effecttimerplus;
 
 import net.fabricmc.api.ClientModInitializer;
 
+@SuppressWarnings("unused")
 public class EffectTimerPlusFabric implements ClientModInitializer {
 
     @Override

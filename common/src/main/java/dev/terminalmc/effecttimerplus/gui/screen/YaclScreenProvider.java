@@ -28,7 +28,7 @@ import dev.terminalmc.effecttimerplus.mixin.accessor.GuiAccessor;
 import dev.terminalmc.effecttimerplus.util.IndicatorUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.util.ARGB;
@@ -399,7 +399,7 @@ public class YaclScreenProvider {
         };
 
         @Override
-        public int render(GuiGraphics graphics, int x, int y, int width, float delta) {
+        public int render(GuiGraphicsExtractor graphics, int x, int y, int width, float delta) {
             float scale = (float) this.scale;
             graphics.pose().pushMatrix();
             graphics.pose().translate(x * (1 - scale), y * (1 - scale));
@@ -474,7 +474,7 @@ public class YaclScreenProvider {
                                 potencyBackColor
                         );
                     }
-                    graphics.drawString(mc.font, label, pX, pY, potencyColor, potencyShadow);
+                    graphics.text(mc.font, label, pX, pY, potencyColor, potencyShadow);
                     graphics.pose().popMatrix();
                 }
                 // Render timer overlay
@@ -516,7 +516,7 @@ public class YaclScreenProvider {
                                 timerBackColor
                         );
                     }
-                    graphics.drawString(
+                    graphics.text(
                             mc.font, label, pX, pY, IndicatorUtil.getTimerColor(
                                     effect,
                                     timerColor,
