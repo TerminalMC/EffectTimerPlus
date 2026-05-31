@@ -17,10 +17,14 @@
 
 package dev.terminalmc.effecttimerplus;
 
+import dev.terminalmc.effecttimerplus.command.Commands;
 import dev.terminalmc.effecttimerplus.gui.screen.ConfigScreenProvider;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 @Mod(
@@ -30,11 +34,28 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 public class EffectTimerPlusNeoForge {
 
     public EffectTimerPlusNeoForge() {
+        // Register config screen
         ModLoadingContext.get().registerExtensionPoint(
                 IConfigScreenFactory.class,
                 () -> (mc, parent) -> ConfigScreenProvider.getConfigScreen(parent)
         );
 
+        // Initialize client
         EffectTimerPlus.init();
+    }
+
+    @EventBusSubscriber(
+            modid = EffectTimerPlus.MOD_ID,
+            value = Dist.CLIENT
+    )
+    static class ClientEventHandler {
+
+        /**
+         * Registers all commands.
+         */
+        @SubscribeEvent
+        public static void onRegisterClientCommands(RegisterClientCommandsEvent event) {
+            Commands.register(event.getDispatcher(), event.getBuildContext());
+        }
     }
 }

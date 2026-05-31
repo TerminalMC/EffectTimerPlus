@@ -17,13 +17,19 @@
 
 package dev.terminalmc.effecttimerplus;
 
+import dev.terminalmc.effecttimerplus.command.Commands;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 
 @SuppressWarnings("unused")
 public class EffectTimerPlusFabric implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        // Register all commands
+        ClientCommandRegistrationCallback.EVENT.register(Commands::register);
+
+        // Initialize client
         EffectTimerPlus.init();
     }
 }

@@ -1,0 +1,46 @@
+/*
+ * EffectTimerPlus
+ * Copyright (C) 2026 TerminalMC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package dev.terminalmc.effecttimerplus.command;
+
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import dev.terminalmc.effecttimerplus.EffectTimerPlus;
+import dev.terminalmc.effecttimerplus.gui.screen.ConfigScreenProvider;
+import net.minecraft.client.Minecraft;
+import net.minecraft.commands.CommandBuildContext;
+
+import static net.minecraft.commands.Commands.literal;
+
+public class Commands {
+
+    private Commands() {
+        throw new UnsupportedOperationException("This class cannot be instantiated.");
+    }
+
+    public static <S> void register(CommandDispatcher<S> dispatcher, CommandBuildContext buildCtx) {
+        Minecraft mc = Minecraft.getInstance();
+        //noinspection unchecked
+        dispatcher.register((LiteralArgumentBuilder<S>) literal(EffectTimerPlus.MOD_ID)
+                .executes((ctx) -> {
+                    mc.schedule(() -> mc.setScreen(ConfigScreenProvider.getConfigScreen(null)));
+                    return Command.SINGLE_SUCCESS;
+                })
+        );
+    }
+}
