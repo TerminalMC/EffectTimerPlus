@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.2.0
+
+- Updated to mc26.1.2
+- Removed refmap usages
+
 ## 3.0.0
 
 - Re-enabled config screen

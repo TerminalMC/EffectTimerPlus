@@ -2,7 +2,6 @@
   "required": true,
   "minVersion": "${mixin_version_min}",
   "package": "dev.terminalmc.effecttimerplus.mixin",
-  "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_${java_version}",
   "plugin": "dev.terminalmc.effecttimerplus.util.MixinConfigPlugin",
   "mixinextras": {
@@ -12,7 +11,7 @@
   ],
   "client": [
     "accessor.GuiAccessor",
-    "MixinGui"
+    "GuiMixin"
   ],
   "server": [
   ],

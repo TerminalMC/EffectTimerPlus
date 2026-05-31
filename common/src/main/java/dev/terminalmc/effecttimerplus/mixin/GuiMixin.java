@@ -48,7 +48,7 @@ import static dev.terminalmc.effecttimerplus.util.IndicatorUtil.*;
         value = Gui.class,
         priority = 2000
 )
-public abstract class MixinGui {
+public abstract class GuiMixin {
 
     @Final
     @Shadow
