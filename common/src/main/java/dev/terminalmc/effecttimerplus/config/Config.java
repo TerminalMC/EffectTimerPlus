@@ -68,7 +68,7 @@ public class Config {
     public static final int defaultTimerWarnTime = 20;
     public int timerWarnTime = defaultTimerWarnTime;
 
-    public static final int defaultPotencyColor = -1140850689;
+    public static final int defaultPotencyColor = 0xBBFFFFFF;
     public int potencyColor = defaultPotencyColor;
 
     public static final boolean defaultPotencyShadow = true;
@@ -77,13 +77,13 @@ public class Config {
     public static final boolean defaultPotencyBack = false;
     public boolean potencyBack = defaultPotencyBack;
 
-    public static final int defaultPotencyBackColor = -1140850689;
+    public static final int defaultPotencyBackColor = 0xBBFFFFFF;
     public int potencyBackColor = defaultPotencyBackColor;
 
-    public static final int defaultTimerColor = -1711276033;
+    public static final int defaultTimerColor = 0xBBFFFFFF;
     public int timerColor = defaultTimerColor;
 
-    public static final int defaultTimerWarnColor = -65536;
+    public static final int defaultTimerWarnColor = 0xFFFF0000;
     public int timerWarnColor = defaultTimerWarnColor;
 
     public static final boolean defaultTimerShadow = true;
@@ -92,7 +92,7 @@ public class Config {
     public static final boolean defaultTimerBack = false;
     public boolean timerBack = defaultTimerBack;
 
-    public static final int defaultTimerBackColor = -1776213727;
+    public static final int defaultTimerBackColor = 0xBBFFFFFF;
     public int timerBackColor = defaultTimerBackColor;
 
     public static final Integer[] locations = {0, 1, 2, 3, 4, 5, 6, 7};
