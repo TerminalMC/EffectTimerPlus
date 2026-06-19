@@ -38,6 +38,10 @@ public class Config {
     private static final String BACKUP_FILE_NAME = EffectTimerPlus.MOD_ID + ".unreadable.json";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
+    private Config() {
+        // Deserializer and self-instantiation only.
+    }
+
     // Options
     // Not using Options subclass due to legacy config format
 

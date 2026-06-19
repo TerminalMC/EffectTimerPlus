@@ -51,7 +51,7 @@ public class EffectTimerPlusNeoForge {
     static class ClientEventHandler {
 
         /**
-         * Registers all commands.
+         * Registers all client commands.
          */
         @SubscribeEvent
         public static void onRegisterClientCommands(RegisterClientCommandsEvent event) {

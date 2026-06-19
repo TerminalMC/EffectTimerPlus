@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.102.1
+
+- Reset `mc` version counter to 1 at mc1.0.0
+- Removed duplicate logger names
+
 ## 3.2.0
 
 - Updated to mc26.1.2
@@ -21,20 +26,3 @@
     update was required.
   - `minor` is reset when `major` is changed, and is incremented on every update that does not
     change either of the previous two numbers.
-
-## 2.2.7
-
-- Fixed potency background toggle option not working
-- Added German translation (kr8gz)
-
-## 2.2.6
-
-- Fixed YACL mod ID in dependencies
-
-## 2.2.5
-
-- Added Russian translation (rfin0)
-
-## 2.2.4
-
-- Added Traditional Chinese translation (notlin4)

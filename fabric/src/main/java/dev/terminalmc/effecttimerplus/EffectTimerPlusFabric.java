@@ -26,7 +26,7 @@ public class EffectTimerPlusFabric implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        // Register all commands
+        // Register all client commands
         ClientCommandRegistrationCallback.EVENT.register(Commands::register);
 
         // Initialize client

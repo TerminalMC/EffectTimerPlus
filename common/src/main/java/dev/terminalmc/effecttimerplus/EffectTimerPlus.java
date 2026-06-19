@@ -18,13 +18,18 @@
 package dev.terminalmc.effecttimerplus;
 
 import dev.terminalmc.effecttimerplus.config.Config;
-import dev.terminalmc.effecttimerplus.util.ModLogger;
+import dev.terminalmc.effecttimerplus.util.Logging;
+import org.apache.logging.log4j.Logger;
 
 public class EffectTimerPlus {
 
     public static final String MOD_ID = "effecttimerplus";
     public static final String MOD_NAME = "EffectTimerPlus";
-    public static final ModLogger LOG = new ModLogger(MOD_NAME);
+    public static final Logger LOG = Logging.getLogger(MOD_ID);
+
+    private EffectTimerPlus() {
+        throw new UnsupportedOperationException("This class cannot be instantiated.");
+    }
 
     public static void init() {
         Config.getAndSave();

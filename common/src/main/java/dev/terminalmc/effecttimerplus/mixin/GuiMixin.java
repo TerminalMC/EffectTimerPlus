@@ -85,9 +85,15 @@ public abstract class GuiMixin {
             )
     )
     private void CreateOverlayRunnable(
-            GuiGraphicsExtractor graphics, RenderPipeline pipeline,
-            Identifier sprite, int x, int y, int width, int height,
-            Operation<Void> original, @Local MobEffectInstance effectInstance
+            GuiGraphicsExtractor graphics,
+            RenderPipeline pipeline,
+            Identifier sprite,
+            int x,
+            int y,
+            int width,
+            int height,
+            Operation<Void> original,
+            @Local(name = "instance") MobEffectInstance effectInstance
     ) {
         original.call(graphics, pipeline, sprite, x, y, width, height);
 
