@@ -10,8 +10,8 @@
   "mixins": [
   ],
   "client": [
-    "GuiMixin",
-    "accessor.GuiAccessor"
+    "HudMixin",
+    "accessor.HudAccessor"
   ],
   "server": [
   ],

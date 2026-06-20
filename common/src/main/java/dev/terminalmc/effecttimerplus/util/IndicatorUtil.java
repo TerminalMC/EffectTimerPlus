@@ -17,7 +17,7 @@
 
 package dev.terminalmc.effecttimerplus.util;
 
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.locale.Language;
 import net.minecraft.world.effect.MobEffectInstance;
 
 public class IndicatorUtil {
@@ -56,11 +56,7 @@ public class IndicatorUtil {
         int value = amplifier + 1;
         if (value > 1) {
             String key = String.format("enchantment.level.%d", value);
-            if (I18n.exists(key)) {
-                return I18n.get(key);
-            } else {
-                return String.valueOf(value);
-            }
+            return Language.getInstance().getOrDefault(key, String.valueOf(value));
         }
         return "";
     }

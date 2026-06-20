@@ -24,11 +24,11 @@ import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.*;
 import dev.isxander.yacl3.gui.image.ImageRenderer;
 import dev.terminalmc.effecttimerplus.config.Config;
-import dev.terminalmc.effecttimerplus.mixin.accessor.GuiAccessor;
+import dev.terminalmc.effecttimerplus.mixin.accessor.HudAccessor;
 import dev.terminalmc.effecttimerplus.util.IndicatorUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.util.ARGB;
@@ -423,19 +423,19 @@ public class YaclScreenProvider {
                 if (effect.isAmbient()) {
                     graphics.blitSprite(
                             RenderPipelines.GUI_TEXTURED,
-                            GuiAccessor.etp$getEffectBackgroundAmbientSprite(),
+                            HudAccessor.etp$getEffectBackgroundAmbientSprite(),
                             movingX, movingY, spriteSize, spriteSize
                     );
                 } else {
                     graphics.blitSprite(
                             RenderPipelines.GUI_TEXTURED,
-                            GuiAccessor.etp$getEffectBackgroundSprite(),
+                            HudAccessor.etp$getEffectBackgroundSprite(),
                             movingX, movingY, spriteSize, spriteSize
                     );
                 }
                 graphics.blitSprite(
                         RenderPipelines.GUI_TEXTURED,
-                        Gui.getMobEffectSprite(effect.getEffect()),
+                        Hud.getMobEffectSprite(effect.getEffect()),
                         movingX + 3, movingY + 3, iconSize, iconSize, ARGB.white(1.0F)
                 );
 

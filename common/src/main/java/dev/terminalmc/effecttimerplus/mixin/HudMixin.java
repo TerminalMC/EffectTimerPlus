@@ -25,8 +25,8 @@ import com.mojang.blaze3d.pipeline.RenderPipeline;
 import dev.terminalmc.effecttimerplus.config.Config;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.Nullable;
@@ -45,10 +45,10 @@ import static dev.terminalmc.effecttimerplus.util.IndicatorUtil.*;
  * <a href="https://github.com/magicus/statuseffecttimer">Status Effect Timer</a>
  */
 @Mixin(
-        value = Gui.class,
+        value = Hud.class,
         priority = 2000
 )
-public abstract class GuiMixin {
+public abstract class HudMixin {
 
     @Final
     @Shadow
