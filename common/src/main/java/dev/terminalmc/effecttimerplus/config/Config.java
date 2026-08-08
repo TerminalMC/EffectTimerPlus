@@ -141,6 +141,8 @@ public class Config {
      * Cleanup and validation method, called after config is loaded and before it is saved.
      */
     private void validate() {
+        timerLocation = Math.clamp(timerLocation, 0, 7);
+        potencyLocation = Math.clamp(potencyLocation, 0, 7);
     }
 
     // Load and save
