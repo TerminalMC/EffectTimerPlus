@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.102.2
+
+- Added Simplified Chinese translation (Lithum-12)
+
 ## 3.102.1
 
 - Reset `mc` version counter to 1 at mc1.0.0
