@@ -21,7 +21,7 @@ package dev.terminalmc.effecttimerplus.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import dev.terminalmc.effecttimerplus.config.Config;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -81,10 +81,10 @@ public abstract class HudMixin {
             method = "extractEffects",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"
+                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"
             )
     )
-    private void CreateOverlayRunnable(
+    private void createOverlayRunnable(
             GuiGraphicsExtractor graphics,
             RenderPipeline pipeline,
             Identifier sprite,
@@ -179,7 +179,7 @@ public abstract class HudMixin {
             method = "extractEffects",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
+                    target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V",
                     shift = At.Shift.AFTER
             )
     )
