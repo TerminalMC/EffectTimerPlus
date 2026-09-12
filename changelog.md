@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.103.1
+
+- Added Simplified Chinese translation (Lithum-12)
+
 ## 3.103.0
 
 - Updated to mc26.2
