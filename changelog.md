@@ -4,6 +4,7 @@
 
 - Updated to mc26.3-rc-2
 - Temporarily disabled config screen
+- Added Simplified Chinese translation (Lithum-12)
 
 ## 3.103.0
 
